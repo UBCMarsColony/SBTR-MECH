@@ -14,28 +14,28 @@ function findHeatingLen(density_gas, nu, alpha, C_p, vol_flwrt, OD, t, ...
 %   PURPOSE:
 %       - determines the tube length required to heat up a gas
 %   PARAM:
-%       density_gas             - fluid density
-%       nu                      - fluid kinematic viscosity
-%       alpha                   - fluid thermal diffusivity
-%       C_p                     - fluid specific heat
-%       vol_flwrt               - volume flowrate of the fluid
-%       OD                      - outer diameter of the tube
-%       t                       - wall thickness of tube
-%       T_in                    - inlet gas temperature
-%       T_out                   - outlet gas temperature
-%       porosity                - void fraction of packed bed
-%       density_nickel          - density of nickel
-%       density_silica_alumina  - density of silica and alumina
-%       wt                      - weight fraction of catalyst
-%       SAperg                  - surface area per mass of packed bed particles
-%       dP_reactor              - differential pressure of the reactor
+%       density_gas             - fluid density [kg/m^3]
+%       nu                      - fluid kinematic viscosity [m^2/s]
+%       alpha                   - fluid thermal diffusivity [m^2/s]
+%       C_p                     - fluid specific heat [J/kg/K]
+%       vol_flwrt               - volume flowrate of the fluid [L/min]
+%       OD                      - outer diameter of the tube [in]
+%       t                       - wall thickness of tube [in]
+%       T_in                    - inlet gas temperature [degC]
+%       T_out                   - outlet gas temperature [degC]
+%       porosity                - void fraction of packed bed [-]
+%       density_nickel          - density of nickel [kg/m^3]
+%       density_silica_alumina  - density of silica and alumina [kg/m^3]
+%       wt                      - weight fraction of catalyst [-]
+%       SAperg                  - surface area per mass of packed bed particles [m^2/g]
+%       dP_reactor              - differential pressure of the reactor [Pa]
 
 %   RETURN:
-%       T_s                     - temperature of packed bed particles
-%       q                       - power input required
+%       T_s                     - temperature of packed bed particles [degC]
+%       q                       - power input required [W]
 
 % ---CONSTANTS---
-g = 9.81;
+g = 9.81; 			% [kg*m/s^2]
 in2m = 0.0254;                  % [m/in]
 LPM2M3PS = 1/1000/60;           % [m^3*min/s/L]
 
