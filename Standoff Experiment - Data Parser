@@ -1,5 +1,6 @@
 # Author: Thomas Richmond
 # Date: 7 February 2020
+# Language: Python
 # Purpose: extracts values of Time, Relay Status, TI1, TI2, TI3, and PI from a .txt document into a .csv file
 
 import csv
