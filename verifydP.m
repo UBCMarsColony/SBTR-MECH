@@ -1,12 +1,20 @@
 %% SABATIER WATER SEPARATOR PRESSURE DROP VERIFICATION
 %   @author     Andrew Zlindra
 %   Created     2020-01-24
-%   @reviewer   
-%   Reviewed    
+%   @reviewer   Norman Kong
+%   Reviewed    2020-02-14
+%
 %   ASSUMPTIONS:
 %       - constant diameter along length of tube
 %       - negligible head loss due to gravity
 %       - flow is laminar (if not, script will throw error)
+%       - flow is incompressible (gas is below Mach 0.3)
+%
+%   INITIAL PARAM:
+%       verifydP(1,0.25,0.035,1.345e-5,0.524,4.5,'CH4')
+%       (inputs are for methane @100C)
+%       (Source: Fluid Mechanics - Fundamentals and Applications 3rd Ed.
+%        Cengel and Cimbala)
 
 function verifydP(length, OD ,t , dyn_visc, density, vol_flwrt, gas_name)
 %   PURPOSE:
