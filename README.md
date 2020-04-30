@@ -1,0 +1,3 @@
+# Sabatier-Test-Reactor-Mechanical
+
+Welcome to the Sabatier Test Reactor Mechanical GitHub Repository! This is where we store our code for mechanical calculations and keep track of version changes.
