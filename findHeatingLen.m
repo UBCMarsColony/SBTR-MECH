@@ -4,8 +4,14 @@
 %   @reviewer
 %   Reviewed
 %
+%   NOTE: DO NOT USE THIS CODE - it is by no means accurate for our project
+%
+%   PURPOSE:
+%       - find the heating length required for a packed bed
+%
 %   ASSUMPTIONS:
 %       -
+% findHeatingLen(0.4132,3.944e-5,5.37e-5,2781,4.5,1,0.035,20,400,0.44,8908,3950,0.65,175,100000,0.1)
 
 
 function findHeatingLen(density_gas, nu, alpha, C_p, vol_flwrt, OD, t, ...
