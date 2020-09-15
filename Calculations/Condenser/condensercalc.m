@@ -1,4 +1,6 @@
-%% condenser single phase calculation
+%% condenser single phase calculation 
+
+% NOTE: DEPRECATED CALCULATION DO NOT USE!
 
 % steps:
 % (1) find convection coeff for water
