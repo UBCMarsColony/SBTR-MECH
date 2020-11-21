@@ -1,0 +1,187 @@
+#include "max6675.h"
+
+// <- this indicates comments and/or section of code that are not being used
+
+//Define variables
+unsigned long time;
+//float actualtemp1 = 0;
+//float actualtemp2 = 0;
+float actualtemp3 = 0;
+float actualtemp4 = 0;
+float actualtemp5 = 0;
+float heatingtapetemp = 0;
+//float thermocouple1_offset = 0; //+0 deg. C offset
+//float thermocouple2_offset = 0; //+0 deg. C offset
+float thermocouple3_offset = 0; //+0 deg. C offset
+float thermocouple4_offset = 0; //+0 deg. C offset
+float thermocouple5_offset = 0; //+0 deg. C offset
+float heatingtape_offset = 0; //+0 deg. C offset
+float templimitgas = 450;
+float templimittape = 500;
+
+// Pressure Transducer 1 Pin Definitions
+const int analogPin1 = A3; // input connected to analog pin 0
+float inPin1;        // variable to store the read value
+float val1 = 0;      // variable to store the read value
+
+// Pressure Transducer 2 Pin Definitions
+const int analogPin2 = A1; // input connected to analog pin 3
+float inPin2;        // variable to store the read value
+float val2 = 0;      // variable to store the read value
+
+//Relay Pin Definitions
+int relaytrigger = 2;
+
+//Thermocouple 1 Pin Definitions
+/*int thermoDO1 = 26;            // SO pin on HW-550 board
+int thermoCS1 = 35;            // CS pin (PWM)
+int thermoCLK1 = 34;          // SCK pin (PWM)
+
+//Thermocouple 2 Pin Definitions
+int thermoDO2 = 22;            // SO pin on HW-550 board
+int thermoCS2 = 35;            // CS pin (PWM)
+int thermoCLK2 = 34;          // SCK pin (PWM)
+*/
+//Thermocouple 3 Pin Definitions
+int thermoDO3 = 24;            // SO pin on HW-550 board
+int thermoCS3 = 35;            // CS pin (PWM)
+int thermoCLK3 = 34;          // SCK pin (PWM)
+
+//Thermocouple 4 Pin Definitions
+int thermoDO4 = 27;            // SO pin on HW-550 board
+int thermoCS4 = 35;            // CS pin (PWM)
+int thermoCLK4 = 34;          // SCK pin (PWM)
+
+//Thermocouple 5 Pin Definitions
+int thermoDO5 = 25;            // SO pin on HW-550 board
+int thermoCS5 = 35;            // CS pin (PWM)
+int thermoCLK5 = 34;          // SCK pin (PWM)
+
+//Thermocouple 6 Pin Definitions
+/*int thermoDO6 = 23;            // SO pin on HW-550 board
+int thermoCS6 = 35;            // CS pin (PWM)
+int thermoCLK6 = 34;          // SCK pin (PWM)
+*/
+//MAX6675 thermocouple1(thermoCLK1, thermoCS1, thermoDO1);      //defining MAX6675
+//MAX6675 thermocouple2(thermoCLK2, thermoCS2, thermoDO2);      //defining MAX6675
+MAX6675 thermocouple3(thermoCLK3, thermoCS3, thermoDO3);      //defining MAX6675
+MAX6675 thermocouple4(thermoCLK4, thermoCS4, thermoDO4);      //defining MAX6675
+MAX6675 thermocouple5(thermoCLK5, thermoCS5, thermoDO5);      //defining MAX6675
+//MAX6675 thermocouple6(thermoCLK6, thermoCS6, thermoDO6);      //defining MAX6675
+
+void setup() {
+  Serial.begin(9600);
+
+  // For Relay
+  pinMode(relaytrigger, OUTPUT);  
+ 
+  // For thermocouple 1
+  /*pinMode(vccPin1, OUTPUT); digitalWrite(vccPin1, HIGH); //set pin as a 5V vcc
+  pinMode(gndPin1, OUTPUT); digitalWrite(gndPin1, LOW);  //set pin as a gnd
+
+  // For thermocouple 2
+  pinMode(vccPin2, OUTPUT); digitalWrite(vccPin2, HIGH); //set pin as a 5V vcc
+  pinMode(gndPin2, OUTPUT); digitalWrite(gndPin2, LOW);  //set pin as a gnd
+  
+  // For thermocouple 3
+  pinMode(vccPin3, OUTPUT); digitalWrite(vccPin3, HIGH); //set pin as a 5V vcc
+  pinMode(gndPin4, OUTPUT); digitalWrite(gndPin3, LOW);  //set pin as a gnd
+  
+  // For thermocouple 4
+  pinMode(vccPin4, OUTPUT); digitalWrite(vccPin4, HIGH); //set pin as a 5V vcc
+  pinMode(gndPin4, OUTPUT); digitalWrite(gndPin4, LOW);  //set pin as a gnd
+
+  // For thermocouple 5
+  pinMode(vccPin5, OUTPUT); digitalWrite(vccPin5, HIGH); //set pin as a 5V vcc
+  pinMode(gndPin5, OUTPUT); digitalWrite(gndPin5, LOW);  //set pin as a gnd
+
+  // For thermocouple 6
+  pinMode(vccPin6, OUTPUT); digitalWrite(vccPin6, HIGH); //set pin as a 5V vcc
+  pinMode(gndPin6, OUTPUT); digitalWrite(gndPin6, LOW);  //set pin as a gnd
+  */
+  // wait for MAX chip to stabilize
+  delay(500);
+
+}
+
+int i = 0;
+
+void loop() {
+
+  inPin1 = analogRead(analogPin1);   // read the input pin
+  val1 = (((inPin1 - 101)*30)/(922-101));
+  /* 
+  1024 bits for arduino input, multiplication factor is 30 as transducer reads 0 to 30 PSI
+  0.5 volts is an analog reading of 101  (rounded) for 0 PSI i.e. aprrox. 0.0-0.5v = 0 PSI
+  4.5 volts is an analog reading of 922  (rounded) for 30 PSI i.e. aprroX. 4.5-5.0v = 30 PSI
+  so the formula is Pressure (PSI) = ( Analog Reading - 101 ) * 30 /  ( 922 - 101 )
+  */
+  inPin2 = analogRead(analogPin2);   // read the input pin
+  val2 = (((inPin2 - 101)*30)/(922-101));
+  //actualtemp1 = (thermocouple1.readCelsius()) - thermocouple1_offset;
+  //actualtemp2 = (thermocouple2.readCelsius()) - thermocouple2_offset;
+  actualtemp3 = (thermocouple3.readCelsius()) - thermocouple3_offset;
+  heatingtapetemp = (thermocouple4.readCelsius()) - heatingtape_offset;
+  actualtemp4 = (thermocouple5.readCelsius()) - thermocouple4_offset;
+  //actualtemp5 = (thermocouple6.readCelsius()) - thermocouple5_offset;
+  if ((heatingtapetemp < templimittape) && (actualtemp4 < templimitgas)) {
+    digitalWrite(relaytrigger,HIGH);           // Turns ON Relay
+  } 
+  else {
+    digitalWrite(relaytrigger,LOW);           // Turns OFF Relay
+  }
+
+  if (i == 10) {
+    Serial.print("\t");
+    
+    Serial.print("Pressure Value 1 (PSI) = "); 
+    Serial.println(val1);
+    Serial.print("\t");
+
+    Serial.print("Pressure Value 2 (PSI) = "); 
+    Serial.println(val2);
+    Serial.print("\t");
+  
+    Serial.print("Temp 1 C = ");
+    Serial.println(actualtemp3);
+    Serial.print("\t");
+
+    Serial.print("Temp 2 C = ");
+    Serial.println(actualtemp4);
+    Serial.print("\t");
+
+    /*Serial.print("Temp 3 C = ");
+    Serial.println(actualtemp5);
+    Serial.print("\t");
+    */
+    Serial.print("Heating Tape C = ");
+    Serial.println(heatingtapetemp);
+    Serial.print("\t");
+    
+    /*Serial.print("Temp 4 C = ");
+    Serial.println(actualtemp4);
+    Serial.print("\t");
+
+    Serial.print("Temp 5 C = ");
+    Serial.println(actualtemp5);
+    Serial.print("\t");
+  */
+    Serial.print("Time: ");
+    time = millis()/1000.0;
+    Serial.println(time);
+    Serial.print("\t");
+
+    if ((heatingtapetemp < templimittape) && (actualtemp4 < templimitgas)) {
+      Serial.println("Relay closed");
+      Serial.print("\n");
+    } 
+    else {
+      Serial.println("Relay open");
+      Serial.print("\n");
+    }
+
+    i = 0;
+  }
+  i = i + 1;
+  delay(400); //0.5 second delay
+}

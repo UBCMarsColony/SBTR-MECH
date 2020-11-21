@@ -1,0 +1,64 @@
+%open file for reading, divide into numbers and text%
+[data_num,data_txt] = xlsread('raw data 4.csv');
+data_num(sum(isnan(data_num), 2) == 10, :) = [];
+data_txt(sum(data_txt == "", 2) == 10, :) = [];
+data_txt(1, :) = [];
+
+%extract data from file
+Time = data_num(:,1);
+Relay = data_txt(:,2);
+Temp5C = data_num(:,3);
+Temp4C = data_num(:,4);
+HeatingTapeTemp = data_num(:,5);
+Temp3C = data_num(:,6);
+Temp2C = data_num(:,7);
+Temp1C = data_num(:,8);
+Pressure2 = data_num(:,9);
+Pressure1 = data_num(:,10);
+ 
+%modify time to be in minutes%
+Time_Mod = 1/60*Time(:,1);
+
+%modify relay text into number values%
+Relay_Mod = zeros(size(data_txt, 1),1);
+for i = 1:size(Relay_Mod, 1)
+if string(Relay(i, 1)) == 'open'
+Relay_Mod(i,1) = 1;
+end
+end
+ 
+%set limits of the plot%
+max_time_mod = max(Time_Mod)*1.02;
+max_temp = max(HeatingTapeTemp)*1.05;
+max_pressure = max(Pressure1)*1.02;
+%%
+clf;
+%
+ 
+%plot the temperature at T1, T2, and T3 over time
+plot(Time_Mod, Temp1C, 'or'), axis([0 max_time_mod 0 max_temp])
+hold on
+plot(Time_Mod, Temp2C, 'og'), axis([0 max_time_mod 0 max_temp])
+hold on
+plot(Time_Mod, Temp3C, 'ob'), axis([0 max_time_mod 0 max_temp])
+hold on
+plot(Time_Mod, Temp4C, 'oy'), axis([0 max_time_mod 0 max_temp])
+hold on
+plot(Time_Mod, Temp5C, 'oc'), axis([0 max_time_mod 0 max_temp])
+hold on
+plot(Time_Mod, HeatingTapeTemp, 'om'), axis([0 max_time_mod 0 max_temp])
+hold on
+legend('Temp1','Temp2','Temp3', 'Temp4', 'Temp5', 'TapeTemp')
+xlabel('Time (min)')
+ylabel('Temperature (C)')
+title(['Time vs TI Temperatures'])
+
+%plot the pressure at PI1 and PI2 over time, separately
+plot(Time_Mod, Pressure1, 'or'), axis([0 max_time_mod 0 max_pressure])
+hold on
+plot(Time_Mod, Pressure2, 'og'), axis([0 max_time_mod 0 max_pressure])
+hold on
+legend('Pressure 1','Pressure 2')
+xlabel('Time (min)')
+ylabel('Pressure (psig)')
+title(['Time vs PI Pressures'])
