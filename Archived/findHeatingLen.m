@@ -55,7 +55,7 @@ A_x = pi * (ID / 2)^2;
 
 v = dP_reactor * density_gas * ID^2 / 64 * nu / L * 2 * g;
 
-Re_D = 4.5 * ID / nu;
+Re_D = 0.148 * ID / nu;
 
 % if Re_D > 4000 || Re_D < 90
 %     error(['Reynolds number out of range. Re = ' num2str(Re_D)  '. Exiting...']) 
